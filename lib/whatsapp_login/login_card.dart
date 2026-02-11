@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/whatsapp_login/signup_card.dart';
+import 'package:my_app/whatsapp_login/forget_password.dart';
 
-class SignupCard extends StatefulWidget {
-  const SignupCard({super.key});
+class LoginCard extends StatefulWidget {
+  const LoginCard({super.key});
 
   @override
-  State<SignupCard> createState() => _SignupCardState();
+  State<LoginCard> createState() => _LoginCardState();
 }
 
-class _SignupCardState extends State<SignupCard> {
-  // Form Key
+class _LoginCardState extends State<LoginCard> {
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      resizeToAvoidBottomInset: true,
 
       appBar: AppBar(
         leading: const Icon(Icons.whatshot_sharp),
-        title: const Text("Whatsapp Signup", style: TextStyle(fontSize: 23)),
+        title: const Text("Whatsapp Login", style: TextStyle(fontSize: 23)),
         centerTitle: true,
       ),
 
@@ -38,59 +39,35 @@ class _SignupCardState extends State<SignupCard> {
               child: Container(
                 height: 600,
                 width: double.infinity,
-                margin: const EdgeInsets.only(top: 90, left: 10, right: 10),
+                margin: const EdgeInsets.only(top: 40, left: 10, right: 10),
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   color: Colors.green[400],
                   borderRadius: BorderRadius.circular(15),
                 ),
-
                 child: Column(
                   children: [
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 18),
 
-                    const Text(
-                      "Create Account",
-                      style: TextStyle(
-                        fontSize: 26,
-                        color: Colors.black,
+                    Text(
+                      "Welcome Back",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.fredoka(
+                        fontSize: 24,
                         fontWeight: FontWeight.w600,
                       ),
-                      textAlign: TextAlign.center,
                     ),
 
-                    const SizedBox(height: 25),
-                    // a26 8 256 1
-                    // vivo t4x 6 128 1
+                    const SizedBox(height: 30),
+
                     Expanded(
                       child: SingleChildScrollView(
                         child: Form(
-                          key: _formKey, // Attach form key
+                          key: _formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              // Full Name
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: "Full Name",
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  prefixIcon: const Icon(Icons.person),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Full name is required";
-                                  }
-                                  return null;
-                                },
-                              ),
-
-                              const SizedBox(height: 15),
-
-                              // Mobile Number
+                              // Mobile Field
                               TextFormField(
                                 decoration: InputDecoration(
                                   hintText: "Mobile Number",
@@ -115,10 +92,10 @@ class _SignupCardState extends State<SignupCard> {
 
                               const SizedBox(height: 15),
 
-                              // Email
+                              // Email Field
                               TextFormField(
                                 decoration: InputDecoration(
-                                  hintText: "Email",
+                                  hintText: "Enter Email",
                                   filled: true,
                                   fillColor: Colors.white,
                                   prefixIcon: const Icon(Icons.email),
@@ -128,8 +105,10 @@ class _SignupCardState extends State<SignupCard> {
                                 ),
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Email is required";
+                                  if (value == null ||
+                                      value.isEmpty ||
+                                      !value.contains("@")) {
+                                    return "Email required";
                                   }
                                   return null;
                                 },
@@ -137,11 +116,11 @@ class _SignupCardState extends State<SignupCard> {
 
                               const SizedBox(height: 15),
 
-                              // Password
+                              // Password Field
                               TextFormField(
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                  hintText: "Password",
+                                  hintText: "Enter Password",
                                   filled: true,
                                   fillColor: Colors.white,
                                   prefixIcon: const Icon(Icons.lock),
@@ -160,9 +139,8 @@ class _SignupCardState extends State<SignupCard> {
                                 },
                               ),
 
-                              const SizedBox(height: 25),
+                              const SizedBox(height: 20),
 
-                              // Signup Button
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.black,
@@ -170,21 +148,20 @@ class _SignupCardState extends State<SignupCard> {
                                     vertical: 15,
                                   ),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
                                 ),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    // If all fields valid
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                        content: Text("Signup Successful"),
+                                        content: Text("Login Successful"),
                                       ),
                                     );
                                   }
                                 },
                                 child: const Text(
-                                  "Signup",
+                                  "Login",
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.white,
@@ -192,25 +169,54 @@ class _SignupCardState extends State<SignupCard> {
                                 ),
                               ),
 
+                              const SizedBox(height: 15),
+
+                              // Forgot Password
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ForgetPassword(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  "Forgot Password?",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+
                               const SizedBox(height: 20),
 
-                              // Already have account
+                              // Signup Row
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    "Already have an account?",
+                                    "New to Whatsapp?",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
                                     ),
                                   ),
+                                  const SizedBox(width: 8),
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignupCard(),
+                                        ),
+                                      );
                                     },
                                     child: const Text(
-                                      "Login",
+                                      "Signup",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
