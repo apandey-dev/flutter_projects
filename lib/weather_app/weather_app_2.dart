@@ -15,6 +15,7 @@ class _WeatherAppState extends State<WeatherApp> {
   String cityName = "";
   String temperature = "";
   String condition = "";
+  String cloud = "";
   String humidity = "";
   String windSpeed = "";
   String feelsLike = "";
@@ -31,7 +32,7 @@ class _WeatherAppState extends State<WeatherApp> {
     });
 
     String city = _cityController.text.trim();
-    String apiKey = "YOUR_API_KEY";
+    String apiKey = "b1cedb626d1bcd73378e43238f3bd007";
 
     Uri url = Uri.parse(
       "https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric",
@@ -46,7 +47,8 @@ class _WeatherAppState extends State<WeatherApp> {
         setState(() {
           cityName = data['name'];
           temperature = data['main']['temp'].toString();
-          condition = data['weather'][0]['main'];
+          condition = data['weather'][0]['main'.toString()];
+          cloud = data['clouds']['all'].toString();
           humidity = data['main']['humidity'].toString();
           windSpeed = data['wind']['speed'].toString();
           feelsLike = data['main']['feels_like'].toString();
@@ -71,7 +73,7 @@ class _WeatherAppState extends State<WeatherApp> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: const Color(0xFF0A0F1C),
+        backgroundColor: const Color.fromARGB(255, 199, 205, 223),
         title: const Text(
           "Weather App",
           style: TextStyle(
@@ -97,6 +99,7 @@ class _WeatherAppState extends State<WeatherApp> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
+              // Heading Of City name
               const Text(
                 "Enter City Name",
                 style: TextStyle(color: Colors.white70, fontSize: 16),
@@ -104,11 +107,14 @@ class _WeatherAppState extends State<WeatherApp> {
 
               const SizedBox(height: 20),
 
-              // ================= INPUT =================
+              // ================= INPUT For City From User =================
               TextFormField(
                 controller: _cityController,
                 style: const TextStyle(color: Colors.white),
+
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.location_city),
+                  prefixIconColor: Colors.white70,
                   hintText: "Search City...",
                   hintStyle: const TextStyle(color: Colors.grey),
                   filled: true,
@@ -123,6 +129,7 @@ class _WeatherAppState extends State<WeatherApp> {
 
               const SizedBox(height: 15),
 
+              // Button Get Weather
               SizedBox(
                 width: double.infinity,
                 height: 48,
@@ -138,7 +145,7 @@ class _WeatherAppState extends State<WeatherApp> {
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text(
                           "Get Weather",
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                 ),
               ),
@@ -210,6 +217,8 @@ class _WeatherAppState extends State<WeatherApp> {
                       _infoCard(
                         title1: "AQI",
                         value1: aqiStatus,
+                        extraTitle: "Clouds",
+                        extraValue: cloud,
                         valueColor: aqiColor,
                         title2: "Humidity",
                         value2: "$humidity %",
@@ -253,12 +262,14 @@ class _WeatherAppState extends State<WeatherApp> {
         color: const Color(0xFF243447),
         borderRadius: BorderRadius.circular(14),
       ),
+
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(title1, style: const TextStyle(color: Colors.white70)),
+
               Text(value1, style: TextStyle(color: valueColor, fontSize: 15)),
             ],
           ),

@@ -31,7 +31,7 @@ class _WeatherAppState extends State<WeatherApp> {
     });
 
     String city = _cityController.text.trim();
-    String apiKey = "your_api_key";
+    String apiKey = "8a5a366d2f30737510b58c4e5cee718e";
 
     Uri url = Uri.parse(
       "https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric",

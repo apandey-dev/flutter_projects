@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/weather_app/weather_app_1.dart';
+import 'package:my_app/weather_app/weather_app_2.dart';
 // import 'package:my_app/whatsapp_login/login_card.dart';
 
 void main() {
